@@ -29,7 +29,6 @@ def create_tweet_view(request, username):
             if post_search:
                 mentioned = Tweeter.objects.filter(username=post_search[0][1:])
                 mention_tweet = Tweet.objects.filter(body=data['body'])
-                print('tweeter:', mentioned[0], 'tweet_id:', mention_tweet[0])
                 Notifications.objects.create(
                     tweeter=mentioned[0],
                     tweet_id=mention_tweet[0]

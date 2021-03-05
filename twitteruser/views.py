@@ -42,7 +42,7 @@ def home_view(request):
 
     user = request.user
     tweets = len(list(Tweet.objects.filter(author=user)))
-    num_following = len(list(user.following.all()))
+    num_following = len(list(user.following.all()))-1
 
     # sort tweets by who the user is following
     following_tweets = []
@@ -71,37 +71,62 @@ def home_view(request):
         })
 
 
+# Profile view
 def profile_view(request, username):
-    user = Tweeter.objects.get(username=username)
-    user_tweets = Tweet.objects.filter(author=user)
-    # sorts tweets by time
-    u_tweets = []
-    for tweet in user_tweets:
-        u_tweets.append(tweet)
+    if request.user.is_authenticated:
+        user = Tweeter.objects.get(username=username)
+        user_tweets = Tweet.objects.filter(author=user)
+        # sorts tweets by time
+        u_tweets = []
+        for tweet in user_tweets:
+            u_tweets.append(tweet)
 
-    def by_time(x):
-        return x.submit_time
+        def by_time(x):
+            return x.submit_time
 
-    sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
-    num_tweets = len(list(user_tweets))
-    num_following = len(list(user.following.all()))
-    print(request.user)
-    logged_in_user = request.user
-    follow_list = logged_in_user.following.all()
-    follow = user
-    return render(
-        request,
-        'profile.html',
-        {
-            'user': user,
-            'sorted_tweets': sorted_tweets,
-            'num_tweets': num_tweets,
-            'num_following': num_following,
-            'follow': follow,
-            'follow_list': follow_list
-        })
+        sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
+        num_tweets = len(list(user_tweets))
+        num_following = len(list(user.following.all()))-1
+        logged_in_user = request.user
+        follow_list = logged_in_user.following.all()
+        follow = user
+        return render(
+            request,
+            'profile.html',
+            {
+                'user': user,
+                'sorted_tweets': sorted_tweets,
+                'num_tweets': num_tweets,
+                'num_following': num_following,
+                'follow': follow,
+                'follow_list': follow_list
+            })
+    else:
+        user = Tweeter.objects.get(username=username)
+        user_tweets = Tweet.objects.filter(author=user)
+        # sorts tweets by time
+        u_tweets = []
+        for tweet in user_tweets:
+            u_tweets.append(tweet)
+
+        def by_time(x):
+            return x.submit_time
+
+        sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
+        num_tweets = len(list(user_tweets))
+        num_following = len(list(user.following.all()))-1
+        return render(
+            request,
+            'profile.html',
+            {
+                'user': user,
+                'sorted_tweets': sorted_tweets,
+                'num_tweets': num_tweets,
+                'num_following': num_following,
+            })
 
 
+# Signup View
 def signup_view(request):
     context = {}
     if request.method == 'POST':
@@ -111,8 +136,12 @@ def signup_view(request):
             Tweeter.objects.create(
                 username=data['username'],
                 email=data['email'],
-                password=data['password']
             )
+            new_user = Tweeter.objects.get(username=data['username'])
+            print(new_user, 'pass:', data['password'])
+            new_user.set_password(data['password'])
+            new_user.following.add(new_user)
+            new_user.save()
             return redirect('login')
     form = SignupForm()
     context.update({'form': form})
@@ -121,5 +150,4 @@ def signup_view(request):
 
 def tweet_view(request, post_id):
     tweet_id = Tweet.objects.get(id=post_id)
-    print(tweet_id.author)
     return render(request, 'tweetpage.html', {'tweet_id': tweet_id})

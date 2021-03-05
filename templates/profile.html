@@ -82,6 +82,13 @@
         font-size: 30px;
     }
 
+    #follow2 {
+        color: rgb(180, 96, 248);
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+        font-size: 20px;
+    }
+
     #unfollow {
         color: rgba(89, 6, 167, 0.205);
         font-family: 'Poiret One', cursive;
@@ -92,21 +99,24 @@
 </style>
 {% extends 'base.html' %}
 {% block content %}
+
 <div id="userContent">
     <div id='userInfo'>
         <h2 id='username'>{{ user.username }}</h2>
         <h2 id='username2'>Handle: @{{ user.username }}</h2>
         <h2 id='tweets'>Tweets: {{ num_tweets }}</h2>
         <h2 id='following'>Following: {{ num_following }}</h2>
-        
-            {% if follow != request.user %}
-                {% if follow not in follow_list %}
-                <a href='/follow/{{follow}}/'><h3 id='follow'>follow</h3></a>
-                {% else %}
-                    <h3 id='unfollow'><a href='/unfollow/{{follow}}/'>unfollow</h3></a>
+            {% if request.user.is_authenticated %}
+                {% if follow != request.user %}
+                    {% if follow not in follow_list %}
+                    <a href='/follow/{{follow}}/'><h3 id='follow'>follow</h3></a>
+                    {% else %}
+                        <h3 id='unfollow' style="color: rgba(89, 6, 167, 0.459);" ><a href='/unfollow/{{follow}}/'>unfollow</h3></a>
+                    {% endif %}
                 {% endif %}
-        {% endif %}
-
+            {% else %}
+                <a href="/signup/"><h3 id='follow2'>Signup to follow</h3></a>
+            {% endif %}
     </div>
     <div id='userTweets'>
         {% for tweet in sorted_tweets %}

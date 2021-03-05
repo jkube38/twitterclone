@@ -26,7 +26,9 @@
 <div id='header'>
     <a href="/tweet/{{request.user}}/"><h2 class="links">Tweet</h2></a>
     <a href='/'><h2 class="links">Home</h2></a>
-    <a href='/tweeter/{{request.user}}/'><h2 class="links">Profile</h2></a>
+    {% if request.user.is_authenticated %}
+        <a href='/tweeter/{{request.user}}/'><h2 class="links">Profile</h2></a>
+    {% endif %}
     {% if request.user.is_authenticated %}
         <a href='/logout/'><h2 class="links">Logout</h2></a>
     {% else %}
