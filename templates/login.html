@@ -1,0 +1,50 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    #formHolder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        font-family: 'Poiret One', cursive;
+    }
+
+    #form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    #welcomeP {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        font-size: 36px;
+    }
+
+    #welcome {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+{% extends 'base.html' %}
+{% block content %}
+<div id='loginContent'>
+    <div id='welcome'>
+        <p id='welcomeP'>
+            Welcome to Twitter clone, login or signup to start sharing.
+        </p>
+    </div>
+    <div id='formHolder'>
+        <h1 id='loginForm'>Login</h1>
+        <form  action='' method="post" id='form'>
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

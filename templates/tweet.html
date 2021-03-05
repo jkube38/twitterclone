@@ -1,0 +1,94 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    #tweetContent {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0 0 0;
+    }
+
+    #userDetails {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 400px;
+        background-image: linear-gradient(black, rgba(89, 6, 167, 0.459), black);
+        margin: 0 200px 0 0;
+    }
+
+    #username{
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #username2 {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #tweets {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #following {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #formHolder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+    #formHeader {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #button {
+        margin: 15px 0 0 0;
+        width: 100px;
+        background-color: rgba(89, 6, 167, 0.459);
+        color: white;
+        font-family: 'Poiret One', cursive;
+        font-size: 20px;
+    }
+
+</style>
+{% extends 'base.html' %}
+{% block content %}
+<div id='tweetContent'>
+    <div id='userDetails'>
+        <h2 id='username'>{{ request.user }}</h2>
+        <h2 id='username2'>Handle: @{{ request.user }}</h2>
+        <h2 id='tweets'>Tweets {{ num_tweets }}</h2>
+        <h2 id='following'>Following {{ num_following }}</h2>
+    </div>
+    <div id='formHolder'>
+        <h2 id='formHeader'>What's on your mind</h2>
+        <form  action='' method="post" id='form'>
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Tweet" id='button'>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

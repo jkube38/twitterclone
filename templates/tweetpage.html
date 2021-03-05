@@ -1,0 +1,57 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    #contentHolder {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0 0 0;
+    }
+    #tweetHolder {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        width: 600px;
+        background-image: linear-gradient(rgba(89, 6, 167, 0.096), black);
+    }
+
+    #author {
+        margin: 0 0 0 10px;
+        color: rgb(194, 194, 194);
+    }
+
+    #postDate {
+        margin: 0 10px 0 0;
+    }
+
+    #tweetContent {
+        background-image: linear-gradient(rgba(89, 6, 167, 0.205), rgba(89, 6, 167, 0.459));
+        min-height: 100px;
+        padding: 15px 0 50px 15px;
+        margin: 0 0 50px 0;
+        border-bottom:  1px solid rgb(180, 96, 248);
+    }
+
+    #stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 45px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div id='contentHolder'>
+    <div id='tweetHolder'>
+        <div id='stats'>
+            <a href="/tweeter/{{tweet_id.author}}/"><h2 id='author'>@{{tweet_id.author}}</h2></a>
+            <h2 id="postDate">{{tweet_id.submit_time}}</h2>
+        </div>
+        <h2 id="tweetContent">{{ tweet_id.body}}</h2>
+    </div>
+</div>
+{% endblock %}

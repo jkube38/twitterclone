@@ -1,0 +1,137 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    #homeContent {
+        display: flex;
+        justify-content: center;
+        margin: 30px 0 0 0;
+
+    }
+
+    #userInfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 400px;
+        background-image: linear-gradient(black, rgba(89, 6, 167, 0.459), black);
+        margin: 0 200px 0 0;
+    }
+
+    #singleTweet {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        width: 600px;
+        background-image: linear-gradient(rgba(89, 6, 167, 0.096), black);
+    }
+
+    #username2 {
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    a {
+        color: rgb(158, 155, 155);
+        font-family: 'Poiret One', cursive;
+        font-size: 15px;
+        text-decoration: none;
+
+    }
+
+    #username {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+        
+    }
+
+    #tweets {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+
+    }
+
+    #following {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 45px;
+    }
+
+    #tweetContent {
+        background-image: linear-gradient(rgba(89, 6, 167, 0.205), rgba(89, 6, 167, 0.459));
+        min-height: 100px;
+        padding: 15px 0 50px 15px;
+        margin: 0 0 50px 0;
+        border-bottom:  1px solid rgb(180, 96, 248);
+    }
+
+    #author {
+        margin: 0 0 0 10px;
+    }
+
+    #postDate {
+        margin: 0 10px 0 0;
+    }
+
+    #notifications {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #mentionsNum {
+        margin: 0 0 15 0;
+        color: black;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 5px;
+        background-color: white;
+        border-radius: 20px;
+        width: 30px;
+        text-align: center;
+    }
+
+    #mentions {
+        display: flex;
+    }
+</style>
+
+{% extends 'base.html' %}
+{% block content %}
+<div id='homeContent'>
+    <div id='userInfo'>
+        <h2 id='username'>{{ user.username }}</h2>
+        <a href='tweeter/{{user.username}}/'><h2 id='username2'>@{{ user.username }}</h2></a>
+        <h2 id='tweets'>Tweets: {{ tweets }}</h2>
+        <h2 id='following'>Following: {{ num_following }}</h2>
+        <div id='mentions'>
+            {% if mentions > 0 %}
+            <a href='/notifications/'><h2 id='notifications'>Notifications</h2></a>
+                <h2 id='mentionsNum'>{{ mentions }}</h2>
+            {% else %}
+                <h2 id='notifications'>Notifications</h2>
+            {% endif %}
+        </div>
+    </div>
+    <div id='tweets'>
+        {% for tweet in follow_tweets %}
+            <div id='singleTweet'>
+                <div id='stats'>
+                    <a href='/tweeter/{{tweet.author}}/'><h2 id='author'>@{{ tweet.author }}</h2></a>
+                    <a href="/tweetdeets/{{tweet.id}}/"><h2 id='postDate'>Posted on: {{ tweet.submit_time }}</h2></a>
+                </div>
+                <h2 id='tweetContent'>{{ tweet.body }}</h2>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

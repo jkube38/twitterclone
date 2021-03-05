@@ -1,0 +1,45 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    #formHolder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 25px 0 0 0;
+    }
+
+    #form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: 'Poiret One', cursive;
+    }
+
+    #signup {
+        color: white;
+        font-family: 'Poiret One', cursive;
+        margin: 0 0 15px 0;
+    }
+
+    #login {
+        color: white;
+        font-family: 'Poiret One', cursive;
+    }
+</style>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div id='formHolder'>
+    <h1 id='signup'>Signup to start sharing!</h1>
+    <form  action='' method="post" id='form'>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Signup">
+    </form>
+    <h2 id='login'>already have an account <a href="/login/">login</a></h2>
+</div>
+{% endblock %}

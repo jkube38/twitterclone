@@ -1,0 +1,37 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
+
+    body {
+        background-color: rgb(0, 0, 0);
+    }
+
+    #header {
+        display: flex;
+        justify-content: space-around;
+        /* background-color: rgba(89, 6, 167, 0.466); */
+        background-image: linear-gradient(rgba(89, 6, 167, 0.466), black);
+        border-bottom: 1px solid rgb(180, 96, 248);
+    }
+
+    .links {
+        color: white;
+        font-family: 'Poiret One', cursive;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<div id='header'>
+    <a href="/tweet/{{request.user}}/"><h2 class="links">Tweet</h2></a>
+    <a href='/'><h2 class="links">Home</h2></a>
+    <a href='/tweeter/{{request.user}}/'><h2 class="links">Profile</h2></a>
+    {% if request.user.is_authenticated %}
+        <a href='/logout/'><h2 class="links">Logout</h2></a>
+    {% else %}
+        <a href='/signup/'><h2 class='links'>Signup</h2></a>
+    {% endif %}
+</div>
+{% block content%}
+{% endblock %}
