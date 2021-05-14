@@ -42,7 +42,7 @@ def home_view(request):
 
     user = request.user
     tweets = len(list(Tweet.objects.filter(author=user)))
-    num_following = len(list(user.following.all()))-1
+    num_following = len(list(user.following.all()))
 
     # sort tweets by who the user is following
     following_tweets = []
@@ -86,7 +86,7 @@ def profile_view(request, username):
 
         sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
         num_tweets = len(list(user_tweets))
-        num_following = len(list(user.following.all()))-1
+        num_following = len(list(user.following.all()))
         logged_in_user = request.user
         follow_list = logged_in_user.following.all()
         follow = user
@@ -114,7 +114,7 @@ def profile_view(request, username):
 
         sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
         num_tweets = len(list(user_tweets))
-        num_following = len(list(user.following.all()))-1
+        num_following = len(list(user.following.all()))
         return render(
             request,
             'profile.html',
