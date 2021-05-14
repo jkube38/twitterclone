@@ -34,15 +34,20 @@ def unfollow_view(request, username):
 
 @login_required(login_url='/login/')
 def home_view(request):
+
+    context = {}
+    user = request.user
+    num_following = len(list(user.following.all()))
+    if num_following > 0:
+        num_following = num_following - 1
+
     # Cleans up Notifications
     clean_mentions = Notifications.objects.filter(tweeter=request.user)
     for mention in clean_mentions:
         if mention.viewed:
             mention.delete()
 
-    user = request.user
     tweets = len(list(Tweet.objects.filter(author=user)))
-    num_following = len(list(user.following.all()))
 
     # sort tweets by who the user is following
     following_tweets = []
@@ -59,20 +64,20 @@ def home_view(request):
 
     # Gets Notifications for the user
     mentions = len(list(Notifications.objects.filter(tweeter=user)))
-    return render(
-        request,
-        'home.html',
-        {
+    context.update({
             'user': user,
             'tweets': tweets,
             'num_following': num_following,
             'follow_tweets': follow_tweets,
             'mentions': mentions
-        })
+    })
+    return render(
+        request, 'home.html', context)
 
 
 # Profile view
 def profile_view(request, username):
+
     if request.user.is_authenticated:
         user = Tweeter.objects.get(username=username)
         user_tweets = Tweet.objects.filter(author=user)
@@ -87,6 +92,10 @@ def profile_view(request, username):
         sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
         num_tweets = len(list(user_tweets))
         num_following = len(list(user.following.all()))
+
+        if num_following > 0:
+            num_following = num_following - 1
+
         logged_in_user = request.user
         follow_list = logged_in_user.following.all()
         follow = user
@@ -114,7 +123,11 @@ def profile_view(request, username):
 
         sorted_tweets = sorted(u_tweets, key=by_time, reverse=True)
         num_tweets = len(list(user_tweets))
+
         num_following = len(list(user.following.all()))
+        if num_following > 0:
+            num_following = num_following - 1
+
         return render(
             request,
             'profile.html',

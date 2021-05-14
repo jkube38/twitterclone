@@ -102,6 +102,13 @@
     #mentions {
         display: flex;
     }
+
+    #tweetHeader {
+        font-family: 'Poiret One', cursive;
+        color: white;
+        text-align: center;
+        font-size: 36px;
+    }
 </style>
 
 {% extends 'base.html' %}
@@ -122,6 +129,7 @@
         </div>
     </div>
     <div id='tweets'>
+        <h2 id='tweetHeader'>Recent Tweets</h2>
         {% for tweet in follow_tweets %}
             <div id='singleTweet'>
                 <div id='stats'>

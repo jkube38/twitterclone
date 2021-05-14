@@ -90,10 +90,17 @@
     }
 
     #unfollow {
-        color: rgba(89, 6, 167, 0.205);
+        color: rgba(137, 64, 206, 0.205);
         font-family: 'Poiret One', cursive;
         margin: 0 0 15px 0;
         font-size: 30px;
+    }
+
+    #myTweets {
+        font-family: 'Poiret One', cursive;
+        text-align: center;
+        color: white;
+        font-size: 36px;
     }
 
 </style>
@@ -111,7 +118,7 @@
                     {% if follow not in follow_list %}
                     <a href='/follow/{{follow}}/'><h3 id='follow'>follow</h3></a>
                     {% else %}
-                        <h3 id='unfollow' style="color: rgba(89, 6, 167, 0.459);" ><a href='/unfollow/{{follow}}/'>unfollow</h3></a>
+                       <a href='/unfollow/{{follow}}/'><h3 id='unfollow'>unfollow</h3></a>
                     {% endif %}
                 {% endif %}
             {% else %}
@@ -119,6 +126,11 @@
             {% endif %}
     </div>
     <div id='userTweets'>
+        {% if follow == request.user %}
+            <h2 id='myTweets'>My Tweets</h2>
+        {% else %}
+            <h2 id='myTweets'>Tweets by {{ follow }}</h2>
+        {% endif %}
         {% for tweet in sorted_tweets %}
             <div id='singleTweet'>
                 <div id='stats'>

@@ -39,6 +39,8 @@ def create_tweet_view(request, username):
     user_tweets = Tweet.objects.filter(author=user)
     num_tweets = len(list(user_tweets))
     num_following = len(list(user.following.all()))
+    if num_following > 0:
+        num_following = num_following - 1
     form = NewTweetForm()
     context.update(
         {
